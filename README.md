@@ -52,5 +52,5 @@ go test  || go test -run ''
 
 
 🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎
-You can check the API documentation here: sample.txt
-You can explore the Postman collection here: https://documenter.getpostman.com/view/3678249/2s9Y5WyPUr
+
+You can explore the Postman collection && documentation here: https://documenter.getpostman.com/view/3678249/2s9Y5WyPUr
