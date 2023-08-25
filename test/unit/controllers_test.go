@@ -38,7 +38,6 @@ func TestPostMusicControllerSuccess(t *testing.T) {
 	req, err := http.NewRequest("POST", "/api/v1/music", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
-		log.Println("err: ", err.Error())
 		t.Logf(err.Error())
 		t.Fail()
 	}
@@ -63,12 +62,9 @@ func TestPostMusicControllerFail(t *testing.T) {
 	req, err := http.NewRequest("POST", "/api/v1/music", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
-		log.Println("err: ", err.Error())
 		t.Logf(err.Error())
 		t.Fail()
 	}
-
-	log.Println("err: ", err)
 
 	w := httptest.NewRecorder()
 
@@ -83,12 +79,9 @@ func TestPostMusicControllerGetByISRC(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/v1/music/isrc/GBAYE0601498", nil)
 
 	if err != nil {
-		log.Println("err: ", err.Error())
 		t.Logf(err.Error())
 		t.Fail()
 	}
-
-	log.Println("err: ", err)
 
 	w := httptest.NewRecorder()
 
@@ -103,12 +96,9 @@ func TestPostMusicControllerGetMany(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/v1/music/search?match=yell", nil)
 
 	if err != nil {
-		log.Println("err: ", err.Error())
 		t.Logf(err.Error())
 		t.Fail()
 	}
-
-	log.Println("err: ", err)
 
 	w := httptest.NewRecorder()
 

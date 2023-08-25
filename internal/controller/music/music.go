@@ -41,7 +41,6 @@ func PostMusic(c *gin.Context) {
 
 		for idx, track := range spotifyTrack.Tracks.Tracks {
 			if track.Popularity >= mostPopular["lvl"].(int) {
-				log.Println("replacing by popularity")
 				mostPopular["idx"] = idx
 				mostPopular["lvl"] = track.Popularity
 			}
@@ -58,14 +57,12 @@ func PostMusic(c *gin.Context) {
 		}
 
 		dbConn := orm.GetDB()
-		err := dbConn.Create(&Track).Error
-
-		if err != nil {
-			c.JSON(http.StatusOK, gin.H{"result": "error - possible duplicated"})
+		if err := dbConn.Create(&Track).Error; err != nil {
+			c.JSON(http.StatusConflict, gin.H{"result": "error - possible duplicated"})
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"result": Track})
+		c.JSON(http.StatusCreated, gin.H{"result": Track})
 	}
 
 }
