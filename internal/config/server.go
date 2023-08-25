@@ -17,6 +17,8 @@ func InitServer() {
 	createRoutes(port)
 }
 
+// The createRoutes internal funciton configures Gin
+// it also subgroups the routes for music management
 func createRoutes(port string) {
 	gin.SetMode(gin.ReleaseMode)
 	log.Printf("Gin cold Start, PORT: %v \n", port)
@@ -24,18 +26,18 @@ func createRoutes(port string) {
 	router.Use(CORSMiddleware())
 	routes.SetMusicRoutes(router, baseUrl)
 
-	//TEST
 	router.GET(baseUrl+"/healthz", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"status": "running",
 		})
 	})
 
-	//Run Application
+	//Run Gin
 	router.Run(":" + port)
 }
 
 // CORSMiddleware
+// the CORSMiddleware function configures management for Access controll, application allowed methods, and headers
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")

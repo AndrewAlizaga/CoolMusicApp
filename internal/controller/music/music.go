@@ -14,6 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Controller for posting track from Spotify by ISRC
 func PostMusic(c *gin.Context) {
 
 	var body *isrc.ISRC = &isrc.ISRC{}
@@ -22,15 +23,11 @@ func PostMusic(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"result": "NOT OK, MISSING ISRC"})
 	}
 
-	//TODO: SPOTIFY LOGIC
 	spotifyClient := utils.GetSpotifyClient()
-
 	if spotifyTrack, err := spotifyClient.Search("isrc:"+body.Isrc, spotify.SearchTypeTrack); err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusNotFound, gin.H{"result": "TRACK NOT FOUND - 💀"})
 	} else {
-
-		//TODO: SQL LOGIC
 
 		if len(spotifyTrack.Tracks.Tracks) == 0 {
 			c.JSON(http.StatusNotFound, gin.H{"result": "NOTHING FOUND"})
@@ -73,7 +70,8 @@ func PostMusic(c *gin.Context) {
 
 }
 
-func FindAll(c *gin.Context) {
+// Controller for Find By Match route
+func FindByMatch(c *gin.Context) {
 
 	match := c.Query("match")
 
@@ -93,6 +91,7 @@ func FindAll(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"result": tracks})
 }
 
+// Controller for Get By ISRC route
 func GetByISRC(c *gin.Context) {
 
 	isrc := c.Param("id")

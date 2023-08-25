@@ -1,6 +1,6 @@
 Cool Music App!
 
-Getting started
+Getting started!
 
 Requirements 
 
@@ -16,7 +16,10 @@ git clone https://gitlab.com/vozy/go-vozyengine-hangup-manager.git
 2) Get and compile dependencies
 go mod tidy
 
-3) Set your env keys locally!
+3) Set your env keys on a .env file using the following key names
+SPOTIFY_CLIENT_ID=<YOUR SPOTIFY CLIENT ID>
+SPOTIFY_CLIENT_KEY=<YOUR SPOTIFY CLIENT SECRET KEY>
+APP_PORT=8080
 
 
 4) Run the project!
@@ -25,3 +28,4 @@ go run main.go
 
 //todo:
 You can check the API documentation here: sample.txt
+You can explore the postman collection here: https://documenter.getpostman.com/view/3678249/2s9Y5WyPUr
