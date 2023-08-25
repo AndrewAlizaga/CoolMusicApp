@@ -14,5 +14,4 @@ func TestSpotifyConn(t *testing.T) {
 	client := utils.GetSpotifyClient()
 	log.Println(client)
 	t.Log("success")
-
 }
