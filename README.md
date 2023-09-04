@@ -1,6 +1,6 @@
-Cool Music App!
+Cool Music App! - Challenge application for spotify API
 
-Getting started!
+1# Getting started!
 
 Requirements 
 
@@ -8,7 +8,7 @@ Requirements
 2 - Have a SQL Server instance running either on you env or the cloud to connect
 3 - Have the lastest version of golang installed
   
-In order to run the app follow the next steps!
+In order to run the app follow the next steps
 
 1) Clone the repository
 ``` bash
@@ -21,7 +21,8 @@ git clone https://gitlab.com/vozy/go-vozyengine-hangup-manager.git
 go mod tidy
 ```
 
-5) Set your env keys on a .env file using the following key names
+5) Set your env keys on a .env file using the following key names (the .env file must be on your project root / also in your test/unit folder if you want to run tests properly)
+
 ``` 
 SPOTIFY_CLIENT_ID="<YOUR SPOTIFY CLIENT ID>"
 SPOTIFY_CLIENT_KEY="<YOUR SPOTIFY CLIENT SECRET KEY>"
@@ -37,7 +38,7 @@ go run main.go
 go build
 ```
 ``` bash 
-./project-name
+./CoolMusicApp
 ```
 
 
