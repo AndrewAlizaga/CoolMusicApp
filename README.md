@@ -1,25 +1,25 @@
-Cool Music App! - Challenge application for spotify API
+Cool Music App! - Challenge application for Spotify API
 
-1# Description
+# Description
 
-The application connects to the spotify developer API in order to extract metadata via a unic spotify ID
-related to a song, afterwards the application stores it on a sqlite database for further usage
+The application connects to the Spotify developer API in order to extract metadata via a unic Spotify ID
+related to a song, afterwards the application stores it on a SQLite database for further usage
 
-the application is divided on 3 routes
+the application is divided into 3 routes
 
-1) Post - ISRC: The route gets data from the api and saves on the local database
+1) Post - ISRC: The route gets data from the API and saves it on the local database
 
-2) GET By ISRC: Get perfect match on the local database
+2) GET By ISRC: Get a perfect match on the local database
 
 3) GET LIKE: Get any matches by song name on the local database
 
 
 
-2# Requirements 
+# Requirements 
 
-1 - Have a spotify development API KEY
-2 - Have a SQL Server instance running either on you env or the cloud to connect
-3 - Have the lastest version of golang installed
+1 - Have a Spotify development API KEY
+2 - Have a SQL Server instance running either on your env or the cloud to connect
+3 - Have the latest version of Golang installed
   
 In order to run the app follow the next steps
 
@@ -42,7 +42,7 @@ SPOTIFY_CLIENT_KEY="<YOUR SPOTIFY CLIENT SECRET KEY>"
 APP_PORT=8080
 ``` 
 
-7) Run the project!, or build it and run the compiled!
+7) Run the project! or build it and run the compiled!
 
 ``` bash
 go run main.go
@@ -55,7 +55,7 @@ go build
 ```
 
 
-Tests
+# Test
 
 1) To run tests go to, /test/unit and run the default test command
 ``` bash
@@ -69,7 +69,7 @@ go test  || go test -run ''
 
 🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎
 
-You can explore the Postman collection && documentation here: https://documenter.getpostman.com/view/3678249/2s9Y5WyPUr
+You can explore the Postman collection and documentation here: https://documenter.getpostman.com/view/3678249/2s9Y5WyPUr
 
 # Author
 
@@ -81,5 +81,5 @@ Golang Version v1.20
 Gin Version v1.9.1
 Godotenv Version v1.5.1
 GORM / SQLITE Version v1.5.3
-zmb3 - spotify library Version v1.3.0 
+zmb3 - Spotify library Version v1.3.0 
 
