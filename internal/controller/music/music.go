@@ -76,7 +76,7 @@ func FindByMatch(c *gin.Context) {
 	match := c.Query("match")
 
 	if match == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"result": "NOT OK, MISSING ISRC"})
+		c.JSON(http.StatusBadRequest, gin.H{"result": "MISSING ISRC"})
 		return
 	}
 
@@ -85,8 +85,12 @@ func FindByMatch(c *gin.Context) {
 
 	searchPattern := "%" + match + "%"
 
-	log.Println(searchPattern)
-	connDB.Where("Title LIKE ?", searchPattern).Find(&tracks)
+	txResult := connDB.Where("Title LIKE ?", searchPattern).Find(&tracks)
+
+	if txResult.Error != nil {
+		c.JSON(http.StatusNotFound, gin.H{"results": txResult.Error.Error()})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"result": tracks})
 	return
@@ -97,15 +101,20 @@ func GetByISRC(c *gin.Context) {
 
 	isrc := c.Param("id")
 
-	if isrc == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"result": "NOT OK, MISSING ISRC"})
+	if isrc == "" || isrc == ":id" {
+		c.JSON(http.StatusBadRequest, gin.H{"result": "MISSING ISRC"})
 		return
 	}
 
 	connDB := orm.GetDB()
 
 	var track sqlModels.Track
-	connDB.First(&track, "isrc = ?", isrc)
+	txResult := connDB.First(&track, "isrc = ?", isrc)
+
+	if txResult.Error != nil {
+		c.JSON(http.StatusNotFound, gin.H{"results": txResult.Error.Error()})
+		return
+	}
 
 	//TODO: SQL LOGIC
 	c.JSON(http.StatusOK, gin.H{"result": track})
