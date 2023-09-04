@@ -1,8 +1,21 @@
 Cool Music App! - Challenge application for spotify API
 
-1# Getting started!
+1# Description
 
-Requirements 
+The application connects to the spotify developer API in order to extract metadata via a unic spotify ID
+related to a song, afterwards the application stores it on a sqlite database for further usage
+
+the application is divided on 3 routes
+
+1) Post - ISRC: The route gets data from the api and saves on the local database
+
+2) GET By ISRC: Get perfect match on the local database
+
+3) GET LIKE: Get any matches by song name on the local database
+
+
+
+2# Requirements 
 
 1 - Have a spotify development API KEY
 2 - Have a SQL Server instance running either on you env or the cloud to connect
@@ -42,11 +55,13 @@ go build
 ```
 
 
-
-
 Tests
 
 1) To run tests go to, /test/unit and run the default test command
+``` bash
+cd ./test/unit
+```
+
 ``` bash
 go test  || go test -run ''
 ```
@@ -55,3 +70,16 @@ go test  || go test -run ''
 🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎🔎
 
 You can explore the Postman collection && documentation here: https://documenter.getpostman.com/view/3678249/2s9Y5WyPUr
+
+# Author
+
+Andrew Alizaga
+
+# Main dependencies 
+
+Golang Version v1.20
+Gin Version v1.9.1
+Godotenv Version v1.5.1
+GORM / SQLITE Version v1.5.3
+zmb3 - spotify library Version v1.3.0 
+
