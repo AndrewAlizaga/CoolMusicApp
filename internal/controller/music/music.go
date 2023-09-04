@@ -21,50 +21,53 @@ func PostMusic(c *gin.Context) {
 
 	if err := c.BindJSON(&body); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"result": "NOT OK, MISSING ISRC"})
+		return
 	}
 
 	spotifyClient := utils.GetSpotifyClient()
-	if spotifyTrack, err := spotifyClient.Search("isrc:"+body.Isrc, spotify.SearchTypeTrack); err != nil {
+	spotifyTrack, err := spotifyClient.Search("isrc:"+body.Isrc, spotify.SearchTypeTrack)
+
+	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusNotFound, gin.H{"result": "TRACK NOT FOUND - 💀"})
-	} else {
-
-		if len(spotifyTrack.Tracks.Tracks) == 0 {
-			c.JSON(http.StatusNotFound, gin.H{"result": "NOTHING FOUND"})
-			return
-		}
-
-		mostPopular := map[string]interface{}{
-			"idx": 0,
-			"lvl": 0,
-		}
-
-		for idx, track := range spotifyTrack.Tracks.Tracks {
-			if track.Popularity >= mostPopular["lvl"].(int) {
-				mostPopular["idx"] = idx
-				mostPopular["lvl"] = track.Popularity
-			}
-		}
-
-		mostPopularTrack := spotifyTrack.Tracks.Tracks[mostPopular["idx"].(int)]
-
-		var Track sqlModels.Track = sqlModels.Track{
-			Isrc:       body.Isrc,
-			Title:      mostPopularTrack.Name,
-			ArtistName: mostPopularTrack.Artists[0].Name,
-			Popularity: int32(mostPopularTrack.Popularity),
-			Image:      mostPopularTrack.Album.Images[0].URL,
-		}
-
-		dbConn := orm.GetDB()
-		if err := dbConn.Create(&Track).Error; err != nil {
-			c.JSON(http.StatusConflict, gin.H{"result": "error - possible duplicated"})
-			return
-		}
-
-		c.JSON(http.StatusCreated, gin.H{"result": Track})
+		return
 	}
 
+	if len(spotifyTrack.Tracks.Tracks) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"result": "NOTHING FOUND"})
+		return
+	}
+
+	mostPopular := map[string]interface{}{
+		"idx": 0,
+		"lvl": 0,
+	}
+
+	for idx, track := range spotifyTrack.Tracks.Tracks {
+		if track.Popularity >= mostPopular["lvl"].(int) {
+			mostPopular["idx"] = idx
+			mostPopular["lvl"] = track.Popularity
+		}
+	}
+
+	mostPopularTrack := spotifyTrack.Tracks.Tracks[mostPopular["idx"].(int)]
+
+	var Track sqlModels.Track = sqlModels.Track{
+		Isrc:       body.Isrc,
+		Title:      mostPopularTrack.Name,
+		ArtistName: mostPopularTrack.Artists[0].Name,
+		Popularity: int32(mostPopularTrack.Popularity),
+		Image:      mostPopularTrack.Album.Images[0].URL,
+	}
+
+	dbConn := orm.GetDB()
+	if err := dbConn.Create(&Track).Error; err != nil {
+		c.JSON(http.StatusConflict, gin.H{"result": "error - possible duplicated"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"result": Track})
+	return
 }
 
 // Controller for Find By Match route
@@ -74,7 +77,7 @@ func FindByMatch(c *gin.Context) {
 
 	if match == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"result": "NOT OK, MISSING ISRC"})
-
+		return
 	}
 
 	connDB := orm.GetDB()
@@ -86,6 +89,7 @@ func FindByMatch(c *gin.Context) {
 	connDB.Where("Title LIKE ?", searchPattern).Find(&tracks)
 
 	c.JSON(http.StatusOK, gin.H{"result": tracks})
+	return
 }
 
 // Controller for Get By ISRC route
@@ -95,6 +99,7 @@ func GetByISRC(c *gin.Context) {
 
 	if isrc == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"result": "NOT OK, MISSING ISRC"})
+		return
 	}
 
 	connDB := orm.GetDB()
@@ -104,4 +109,5 @@ func GetByISRC(c *gin.Context) {
 
 	//TODO: SQL LOGIC
 	c.JSON(http.StatusOK, gin.H{"result": track})
+	return
 }
